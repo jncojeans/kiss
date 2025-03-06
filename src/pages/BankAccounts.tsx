@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Building2, DollarSign, ExternalLink } from 'lucide-react';
+import { Plus, Building2, DollarSign, ExternalLink, Filter, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AddBankAccountModal from '../components/AddBankAccountModal';
+import { cn } from '../lib/utils';
 
 type BankAccount = {
   id: string;
@@ -49,19 +50,30 @@ export default function BankAccounts() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Bank Accounts</h1>
-        <button 
-          onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Add Bank Account
-        </button>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Bank Accounts</h1>
+          <p className="text-gray-500">Manage your bank accounts and connections</p>
+        </div>
+        <div className="flex space-x-3">
+          <button
+            className="px-4 py-2 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] hover:shadow-[inset_2px_2px_4px_#bec3c9,inset_-2px_-2px_4px_#ffffff] text-gray-700 flex items-center"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </button>
+          <button 
+            onClick={() => setIsAddModalOpen(true)}
+            className="px-4 py-2 rounded-xl bg-[#6d7b92] text-white shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] hover:bg-[#5d6b82] flex items-center"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Bank Account
+          </button>
+        </div>
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Balance</p>
@@ -69,25 +81,25 @@ export default function BankAccounts() {
                 ${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <DollarSign className="h-6 w-6 text-blue-600" />
+            <div className="h-12 w-12 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center">
+              <DollarSign className="h-6 w-6 text-[#6d7b92]" />
             </div>
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Accounts</p>
               <p className="text-2xl font-bold">{accounts.length}</p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-full">
-              <Building2 className="h-6 w-6 text-purple-600" />
+            <div className="h-12 w-12 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-[#6d7b92]" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Active Banks</p>
@@ -95,15 +107,22 @@ export default function BankAccounts() {
                 {new Set(accounts.map(a => a.bank_name)).size}
               </p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <Building2 className="h-6 w-6 text-green-600" />
+            <div className="h-12 w-12 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-[#6d7b92]" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Accounts Table */}
-      <div className="bg-white rounded-lg shadow-sm border relative">
+      <div className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] relative">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-bold">Account Details</h2>
+          <button className="p-2 rounded-lg bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] hover:shadow-[inset_2px_2px_4px_#bec3c9,inset_-2px_-2px_4px_#ffffff]">
+            <Filter className="h-4 w-4" />
+          </button>
+        </div>
+
         {loading && (
           <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center">
             <div className="text-gray-500">Loading accounts...</div>
@@ -111,14 +130,14 @@ export default function BankAccounts() {
         )}
         
         {error && (
-          <div className="p-4 text-red-600 bg-red-50 rounded-lg mb-4">
+          <div className="p-4 text-red-600 rounded-xl bg-[#e0e5ec] shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] mb-4">
             {error}
           </div>
         )}
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl bg-[#e0e5ec] shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] p-4">
           <table className="w-full">
-            <thead>
+            <thead className="bg-[#e0e5ec]">
               <tr className="bg-gray-50 border-b">
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-600">Account Name</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-600">Bank</th>
@@ -130,7 +149,7 @@ export default function BankAccounts() {
             </thead>
             <tbody>
               {accounts.map((account) => (
-                <tr key={account.id} className="border-b last:border-b-0 hover:bg-gray-50">
+                <tr key={account.id} className="border-b last:border-b-0 hover:bg-[#e6ebf2] transition-colors">
                   <td className="py-4 px-6">
                     <div className="font-medium text-gray-900">{account.name}</div>
                   </td>
@@ -144,7 +163,7 @@ export default function BankAccounts() {
                   </td>
                   <td className="py-4 px-6">
                     <div className="flex justify-center">
-                      <button className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 hover:text-blue-600">
+                      <button className="p-2 rounded-lg bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] hover:shadow-[inset_2px_2px_4px_#bec3c9,inset_-2px_-2px_4px_#ffffff] text-gray-600">
                         <ExternalLink className="h-5 w-5" />
                       </button>
                     </div>

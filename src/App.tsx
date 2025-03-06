@@ -1,20 +1,78 @@
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { 
-  BarChart3, 
-  Wallet, 
-  LineChart, 
-  Shield, 
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import {
+  BarChart3,
+  Wallet,
+  CreditCard,
+  LineChart,
+  Shield,
   ArrowRightCircle,
   Building2,
   Globe,
   Users,
-  LogIn
-} from 'lucide-react';
+  LogIn,
+  Lock,
+  Clock,
+  DollarSign,
+  PieChart,
+  TrendingUp
+} from "lucide-react";
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DashboardHome from './pages/DashboardHome';
 import BankAccounts from './pages/BankAccounts';
+import CashFlow from './pages/CashFlow';
+
+const features = [
+  {
+    icon: <Wallet className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Cash Management",
+    description: "Centralized view of all cash positions and forecasting capabilities."
+  },
+  {
+    icon: <Globe className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Global Banking",
+    description: "Connect with banks worldwide through secure API integrations."
+  },
+  {
+    icon: <TrendingUp className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Investment Management", 
+    description: "Track and manage investments with real-time market data integration."
+  },
+  {
+    icon: <CreditCard className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Payment Processing",
+    description: "Streamline domestic and international payment workflows."
+  },
+  {
+    icon: <LineChart className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Financial Analytics",
+    description: "Gain insights with comprehensive reporting and analytics."
+  },
+  {
+    icon: <Shield className="h-8 w-8 text-[#6d7b92]" />,
+    title: "Risk Management",
+    description: "Identify and mitigate financial risks with advanced tools."
+  }
+];
+
+const testimonials = [
+  {
+    quote: "TreasuryPro has transformed how we manage our global treasury operations.",
+    author: "Sarah Johnson",
+    title: "CFO, Global Enterprises Inc."
+  },
+  {
+    quote: "The integration capabilities with our ERP system made implementation seamless. We've seen a 40% reduction in manual processing time.",
+    author: "Michael Chen",
+    title: "Treasury Director, Tech Innovations"
+  },
+  {
+    quote: "The risk management tools have given us unprecedented visibility into our FX exposures. A game-changer for our multinational operations.",
+    author: "Emma Rodriguez",
+    title: "VP of Finance, Worldwide Retail"
+  }
+];
 
 function App() {
   return (
@@ -22,29 +80,45 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<DashboardHome />} />
           <Route path="bank-accounts" element={<BankAccounts />} />
+          <Route path="cash-flow" element={<CashFlow />} />
           {/* Other dashboard routes will be added here */}
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={
-          <div className="min-h-screen bg-white">
+          <div className="min-h-screen bg-[#e0e5ec]">
             {/* Hero Section */}
-            <nav className="bg-white border-b">
+            <nav className="bg-[#e0e5ec] border-b">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
                   <div className="flex items-center">
-                    <BarChart3 className="h-8 w-8 text-blue-600" />
-                    <span className="ml-2 text-xl font-semibold">TreasuryPro</span>
+                    <Link to="/" className="flex items-center space-x-2">
+                      <div className="h-10 w-10 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center">
+                        <DollarSign className="h-6 w-6 text-[#6d7b92]" />
+                      </div>
+                      <span className="text-xl font-bold">TreasuryPro</span>
+                    </Link>
                   </div>
                   <div className="hidden md:flex space-x-8">
-                    <a href="#features" className="text-gray-600 hover:text-gray-900">Features</a>
-                    <a href="#solutions" className="text-gray-600 hover:text-gray-900">Solutions</a>
-                    <a href="#clients" className="text-gray-600 hover:text-gray-900">Clients</a>
+                    {["Features", "Solutions", "Pricing", "Resources"].map((item) => (
+                      <a
+                        key={item}
+                        href={`#${item.toLowerCase()}`}
+                        className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-[#e0e5ec] hover:shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] transition-all duration-200"
+                      >
+                        {item}
+                      </a>
+                    ))}
                     <Link
                       to="/login"
-                      className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                      className="px-4 py-2 rounded-xl bg-[#e0e5ec] shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] hover:shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] transition-all duration-200"
                     >
-                      <LogIn className="h-5 w-5 mr-2" />
                       Sign In
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="px-4 py-2 rounded-xl bg-[#6d7b92] text-white shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] hover:bg-[#5d6b82] transition-all duration-200"
+                    >
+                      Get Started
                     </Link>
                   </div>
                 </div>
@@ -52,213 +126,100 @@ function App() {
             </nav>
 
             <main>
-              {/* Hero Section */}
-              <div className="relative bg-white overflow-hidden">
+              <div className="py-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                  <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-                    <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                      <div className="sm:text-center lg:text-left">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
                         <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                          <span className="block">Modern Treasury</span>
-                          <span className="block text-blue-600">Management Solution</span>
+                          <span className="block">Modern Treasury Management</span>
+                          <span className="block text-[#6d7b92]">for the Digital Age</span>
                         </h1>
                         <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                           Streamline your treasury operations with our comprehensive workstation. 
                           Manage cash, investments, and risk all in one place.
                         </p>
-                        <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                          <div className="rounded-md shadow">
-                            <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
-                              Request Demo
-                            </a>
-                          </div>
+                        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                          <button className="px-8 py-6 rounded-xl bg-[#6d7b92] text-white shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] hover:bg-[#5d6b82] transition-all duration-200">
+                            Request Demo
+                          </button>
+                          <button className="px-8 py-6 rounded-xl bg-[#e0e5ec] text-gray-700 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] hover:shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] border-0 transition-all duration-200">
+                            Learn More
+                          </button>
                         </div>
-                      </div>
-                    </main>
+                    </div>
+                    <div className="rounded-2xl bg-[#e0e5ec] p-6 shadow-[10px_10px_20px_#bec3c9,-10px_-10px_20px_#ffffff]">
+                      <img
+                        src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
+                        alt="Treasury dashboard preview"
+                        className="rounded-xl w-full h-auto"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-                  <img
-                    className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-                    src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-                    alt="Office workspace"
-                  />
                 </div>
               </div>
 
               {/* Features Section */}
-              <div className="py-12 bg-gray-50">
+              <div className="py-20 px-4 sm:px-6 lg:px-8 bg-[#e6ebf2]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="lg:text-center">
-                    <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Features</h2>
+                    <h2 className="text-base text-[#6d7b92] font-semibold tracking-wide uppercase">Features</h2>
                     <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                       Everything you need to manage treasury
                     </p>
+                    <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                      Our platform provides all the tools you need to manage your organization's financial operations efficiently.
+                    </p>
                   </div>
 
-                  <div className="mt-10">
-                    <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0">
-                          <Wallet className="h-12 w-12 text-blue-600" />
+                  <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff] hover:shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] transition-all duration-300"
+                      >
+                        <div className="h-14 w-14 rounded-xl bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center mb-4">
+                          {feature.icon}
                         </div>
-                        <div className="ml-4">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">Cash Management</h3>
-                          <p className="mt-2 text-base text-gray-500">
-                            Centralized view of all cash positions and forecasting capabilities.
-                          </p>
-                        </div>
+                        <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                        <p className="text-gray-600">{feature.description}</p>
                       </div>
-
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0">
-                          <LineChart className="h-12 w-12 text-blue-600" />
-                        </div>
-                        <div className="ml-4">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">Investment Portfolio</h3>
-                          <p className="mt-2 text-base text-gray-500">
-                            Track and manage investments with real-time market data integration.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0">
-                          <Shield className="h-12 w-12 text-blue-600" />
-                        </div>
-                        <div className="ml-4">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">Risk Management</h3>
-                          <p className="mt-2 text-base text-gray-500">
-                            Comprehensive tools for monitoring and managing financial risks.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Stats Section */}
-              <div className="bg-blue-600">
-                <div className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="text-center">
-                      <div className="text-5xl font-extrabold text-white">500+</div>
-                      <div className="mt-2 text-lg font-medium text-blue-100">Enterprise Clients</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-5xl font-extrabold text-white">$2T+</div>
-                      <div className="mt-2 text-lg font-medium text-blue-100">Managed Assets</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-5xl font-extrabold text-white">99.9%</div>
-                      <div className="mt-2 text-lg font-medium text-blue-100">Uptime</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-5xl font-extrabold text-white">50+</div>
-                      <div className="mt-2 text-lg font-medium text-blue-100">Countries</div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
 
               {/* Testimonials */}
-              <div className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+              <div className="py-20 px-4 sm:px-6 lg:px-8 bg-[#e0e5ec]">
                 <div className="max-w-7xl mx-auto">
-                  <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <Building2 className="h-8 w-8 text-blue-600 mb-4" />
-                      <p className="text-gray-600">"TreasuryPro has transformed how we manage our global treasury operations."</p>
-                      <div className="mt-4">
-                        <p className="text-sm font-medium text-gray-900">Sarah Johnson</p>
-                        <p className="text-sm text-gray-500">CFO, Global Corp</p>
-                      </div>
-                    </div>
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <Globe className="h-8 w-8 text-blue-600 mb-4" />
-                      <p className="text-gray-600">"The risk management capabilities have been invaluable for our international operations."</p>
-                      <div className="mt-4">
-                        <p className="text-sm font-medium text-gray-900">Michael Chen</p>
-                        <p className="text-sm text-gray-500">Treasury Director, Tech Solutions</p>
-                      </div>
-                    </div>
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <Users className="h-8 w-8 text-blue-600 mb-4" />
-                      <p className="text-gray-600">"Outstanding customer support and continuous platform improvements."</p>
-                      <div className="mt-4">
-                        <p className="text-sm font-medium text-gray-900">Emma Martinez</p>
-                        <p className="text-sm text-gray-500">Head of Treasury, Finance Plus</p>
-                      </div>
-                    </div>
+                  <div className="text-center mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold mb-4">Trusted by Financial Leaders</h2>
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                      See what treasury professionals are saying about our platform.
+                    </p>
                   </div>
-                </div>
-              </div>
 
-              {/* CTA Section */}
-              <div className="bg-gray-50">
-                <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-                  <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    <span className="block">Ready to streamline your treasury?</span>
-                    <span className="block text-blue-600">Start your free trial today.</span>
-                  </h2>
-                  <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-                    <div className="inline-flex rounded-md shadow">
-                      <a href="#" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                        Get started
-                        <ArrowRightCircle className="ml-3 -mr-1 h-5 w-5" />
-                      </a>
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {testimonials.map((testimonial, index) => (
+                      <div
+                        key={index}
+                        className="rounded-xl bg-[#e0e5ec] p-6 shadow-[5px_5px_10px_#bec3c9,-5px_-5px_10px_#ffffff]"
+                      >
+                        <p className="text-gray-600 mb-4 italic">"{testimonial.quote}"</p>
+                        <div className="flex items-center">
+                          <div className="h-12 w-12 rounded-full bg-[#e0e5ec] shadow-[3px_3px_6px_#bec3c9,-3px_-3px_6px_#ffffff] flex items-center justify-center mr-4">
+                            <Users className="h-6 w-6 text-[#6d7b92]" />
+                          </div>
+                          <div>
+                            <p className="font-bold">{testimonial.author}</p>
+                            <p className="text-sm text-gray-500">{testimonial.title}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </main>
-
-            {/* Footer */}
-            <footer className="bg-gray-800">
-              <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                  <div>
-                    <h3 className="text-white font-semibold">Product</h3>
-                    <ul className="mt-4 space-y-2">
-                      <li><a href="#" className="text-gray-300 hover:text-white">Features</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Pricing</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Security</a></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-semibold">Company</h3>
-                    <ul className="mt-4 space-y-2">
-                      <li><a href="#" className="text-gray-300 hover:text-white">About</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Careers</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Contact</a></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-semibold">Resources</h3>
-                    <ul className="mt-4 space-y-2">
-                      <li><a href="#" className="text-gray-300 hover:text-white">Blog</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Documentation</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Help Center</a></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-semibold">Legal</h3>
-                    <ul className="mt-4 space-y-2">
-                      <li><a href="#" className="text-gray-300 hover:text-white">Privacy</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Terms</a></li>
-                      <li><a href="#" className="text-gray-300 hover:text-white">Compliance</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-8 border-t border-gray-700 pt-8 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <BarChart3 className="h-8 w-8 text-blue-500" />
-                    <span className="ml-2 text-white text-xl font-semibold">TreasuryPro</span>
-                  </div>
-                  <p className="text-gray-400">&copy; 2025 TreasuryPro. All rights reserved.</p>
-                </div>
-              </div>
-            </footer>
           </div>
         } />
       </Routes>
