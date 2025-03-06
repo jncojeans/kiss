@@ -195,7 +195,7 @@ export default function BankingPage() {
                       <User className="h-6 w-6 text-[#6d7b92]" />
                     </div>
                     <div className="hidden md:block text-left">
-                      <div className="text-sm font-medium">Alex Morgan</div>
+                      <div className="text-sm font-medium">Kevin Sjolin</div>
                       <div className="text-xs text-gray-500">Treasury Manager</div>
                     </div>
                     <ChevronDown className="h-4 w-4 text-gray-500" />
